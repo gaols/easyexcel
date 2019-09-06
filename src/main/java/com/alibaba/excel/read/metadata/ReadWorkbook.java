@@ -6,6 +6,7 @@ import java.io.InputStream;
 import com.alibaba.excel.cache.ReadCache;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
+import com.alibaba.excel.support.ErrorLevelEnum;
 import com.alibaba.excel.support.ExcelTypeEnum;
 
 /**
@@ -67,6 +68,7 @@ public class ReadWorkbook extends ReadBasicParameter {
      */
     @Deprecated
     private Boolean defaultReturnMap;
+    private ErrorLevelEnum errorLevel = ErrorLevelEnum.LEVEL_FIELD;
 
     public ExcelTypeEnum getExcelType() {
         return excelType;
@@ -138,5 +140,13 @@ public class ReadWorkbook extends ReadBasicParameter {
 
     public void setDefaultReturnMap(Boolean defaultReturnMap) {
         this.defaultReturnMap = defaultReturnMap;
+    }
+
+    public void setErrorLevel(ErrorLevelEnum errorLevel) {
+        this.errorLevel = errorLevel;
+    }
+
+    public ErrorLevelEnum getErrorLevel() {
+        return errorLevel;
     }
 }

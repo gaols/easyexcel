@@ -10,6 +10,7 @@ import com.alibaba.excel.read.metadata.holder.ReadHolder;
 import com.alibaba.excel.read.metadata.holder.ReadRowHolder;
 import com.alibaba.excel.read.metadata.holder.ReadSheetHolder;
 import com.alibaba.excel.read.metadata.holder.ReadWorkbookHolder;
+import com.alibaba.excel.support.ErrorLevelEnum;
 import com.alibaba.excel.support.ExcelTypeEnum;
 
 /**
@@ -149,4 +150,11 @@ public interface AnalysisContext {
      * @param field the model field name
      */
     void addConvertFailField(String field);
+
+    /**
+     * Get error level.
+     *
+     * @return error level
+     */
+    ErrorLevelEnum getErrorLevel();
 }

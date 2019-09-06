@@ -12,6 +12,7 @@ import com.alibaba.excel.converters.Converter;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.read.metadata.ReadWorkbook;
+import com.alibaba.excel.support.ErrorLevelEnum;
 import com.alibaba.excel.support.ExcelTypeEnum;
 
 /**
@@ -205,6 +206,11 @@ public class ExcelReaderBuilder {
 
     public ExcelReaderSheetBuilder sheet() {
         return sheet(null, null);
+    }
+
+    public ExcelReaderBuilder errorLevel(ErrorLevelEnum level) {
+        readWorkbook.setErrorLevel(level);
+        return this;
     }
 
     public ExcelReaderSheetBuilder sheet(Integer sheetNo) {

@@ -2,6 +2,7 @@ package com.alibaba.excel.context;
 
 import java.io.InputStream;
 
+import com.alibaba.excel.support.ErrorLevelEnum;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -195,5 +196,13 @@ public class AnalysisContextImpl implements AnalysisContext {
     @Override
     public void addConvertFailField(String field) {
         readRowHolder().getConvertFailFields().add(field);
+    }
+
+    public void setErrorLevel(ErrorLevelEnum errorLevel) {
+        readWorkbookHolder().getReadWorkbook().setErrorLevel(errorLevel);
+    }
+
+    public ErrorLevelEnum getErrorLevel() {
+        return readWorkbookHolder().getReadWorkbook().getErrorLevel();
     }
 }

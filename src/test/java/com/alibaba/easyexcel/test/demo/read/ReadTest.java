@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 import java.util.Map;
 
+import com.alibaba.excel.support.ErrorLevelEnum;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -163,9 +164,9 @@ public class ReadTest {
      */
     @Test
     public void exceptionRead() {
-        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo.xlsx";
+        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo1.xlsx";
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 然后千万别忘记 finish
-        EasyExcel.read(fileName, DemoData.class, new DemoHeadDataListener()).sheet().doRead();
+        EasyExcel.read(fileName, DemoData.class, new DemoHeadDataListener()).errorLevel(ErrorLevelEnum.LEVEL_ROW).sheet().doRead();
     }
 
     /**

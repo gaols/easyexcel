@@ -18,6 +18,7 @@ import com.alibaba.excel.metadata.Head;
 import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import com.alibaba.excel.read.metadata.holder.ReadHolder;
 import com.alibaba.excel.read.metadata.property.ExcelReadHeadProperty;
+import com.alibaba.excel.support.ErrorLevelEnum;
 import com.alibaba.excel.util.ConverterUtils;
 
 import net.sf.cglib.beans.BeanMap;
@@ -101,7 +102,11 @@ public class ModelBuildEventListener extends AbstractIgnoreExceptionReadListener
                     map.put(excelContentProperty.getField().getName(), value);
                 }
             } catch (ExcelDataConvertException ex) {
-                context.addConvertFailField(entry.getValue().getFieldName());
+                if (ErrorLevelEnum.LEVEL_FIELD == context.getErrorLevel()) {
+                    context.addConvertFailField(entry.getValue().getFieldName());
+                } else {
+                    throw ex;
+                }
             }
         }
         BeanMap.create(resultModel).putAll(map);
