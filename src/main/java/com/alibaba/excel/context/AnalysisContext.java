@@ -134,4 +134,19 @@ public interface AnalysisContext {
      */
     @Deprecated
     void interrupt();
+
+    /**
+     * Check whether the specified field is failed to convert when building user model
+     *
+     * @param field the model field name
+     * @return true if the field failed to convert, false otherwise.
+     */
+    boolean fieldConvertFail(String field);
+
+    /**
+     * Mark the specified field failed-to-conversion.
+     *
+     * @param field the model field name
+     */
+    void addConvertFailField(String field);
 }

@@ -186,4 +186,14 @@ public class AnalysisContextImpl implements AnalysisContext {
     public void interrupt() {
         throw new ExcelAnalysisException("interrupt error");
     }
+
+    @Override
+    public boolean fieldConvertFail(String field) {
+        return readRowHolder().getConvertFailFields().contains(field);
+    }
+
+    @Override
+    public void addConvertFailField(String field) {
+        readRowHolder().getConvertFailFields().add(field);
+    }
 }

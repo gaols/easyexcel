@@ -36,7 +36,7 @@ public class ModelBuildEventListener extends AbstractIgnoreExceptionReadListener
     public void invoke(Map<Integer, CellData> cellDataMap, AnalysisContext context) {
         ReadHolder currentReadHolder = context.currentReadHolder();
         if (HeadKindEnum.CLASS.equals(currentReadHolder.excelReadHeadProperty().getHeadKind())) {
-            context.readRowHolder().setCurrentRowAnalysisResult(buildUserModel(cellDataMap, currentReadHolder));
+            context.readRowHolder().setCurrentRowAnalysisResult(buildUserModel(cellDataMap, currentReadHolder, context));
             return;
         }
         context.readRowHolder().setCurrentRowAnalysisResult(buildStringList(cellDataMap, currentReadHolder, context));
@@ -72,7 +72,7 @@ public class ModelBuildEventListener extends AbstractIgnoreExceptionReadListener
         }
     }
 
-    private Object buildUserModel(Map<Integer, CellData> cellDataMap, ReadHolder currentReadHolder) {
+    private Object buildUserModel(Map<Integer, CellData> cellDataMap, ReadHolder currentReadHolder, AnalysisContext context) {
         ExcelReadHeadProperty excelReadHeadProperty = currentReadHolder.excelReadHeadProperty();
         Object resultModel;
         try {
@@ -94,10 +94,14 @@ public class ModelBuildEventListener extends AbstractIgnoreExceptionReadListener
                 continue;
             }
             ExcelContentProperty excelContentProperty = contentPropertyMap.get(index);
-            Object value = ConverterUtils.convertToJavaObject(cellData, excelContentProperty.getField().getType(),
-                excelContentProperty, currentReadHolder.converterMap(), currentReadHolder.globalConfiguration());
-            if (value != null) {
-                map.put(excelContentProperty.getField().getName(), value);
+            try {
+                Object value = ConverterUtils.convertToJavaObject(cellData, excelContentProperty.getField().getType(),
+                        excelContentProperty, currentReadHolder.converterMap(), currentReadHolder.globalConfiguration());
+                if (value != null) {
+                    map.put(excelContentProperty.getField().getName(), value);
+                }
+            } catch (ExcelDataConvertException ex) {
+                context.addConvertFailField(entry.getValue().getFieldName());
             }
         }
         BeanMap.create(resultModel).putAll(map);

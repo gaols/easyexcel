@@ -4,6 +4,9 @@ import com.alibaba.excel.enums.HolderEnum;
 import com.alibaba.excel.metadata.GlobalConfiguration;
 import com.alibaba.excel.metadata.Holder;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * sheet holder
  *
@@ -14,6 +17,10 @@ public class ReadRowHolder implements Holder {
      * Returns row index of a row in the sheet that contains this cell.Start form 0.
      */
     private int rowIndex;
+    /**
+     * Record convert fail cols.
+     */
+    private Set<String> convertFailFields = new HashSet<String>();
 
     /**
      * The result of the previous listener
@@ -56,5 +63,9 @@ public class ReadRowHolder implements Holder {
     @Override
     public HolderEnum holderType() {
         return HolderEnum.ROW;
+    }
+
+    public Set<String> getConvertFailFields() {
+        return convertFailFields;
     }
 }
