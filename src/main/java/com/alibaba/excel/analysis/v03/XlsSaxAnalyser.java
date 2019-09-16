@@ -85,11 +85,11 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelExecutor {
 
     @Override
     public void execute() {
-        analysisContext.readSheetHolder().getSheetNo();
+//        analysisContext.readSheetHolder().getSheetNo();
         MissingRecordAwareHSSFListener listener = new MissingRecordAwareHSSFListener(this);
         formatListener = new FormatTrackingHSSFListener(listener);
         workbookBuildingListener = new EventWorkbookBuilder.SheetRecordCollectingListener(formatListener);
-        if (workbookBuildingListener != null && stubWorkbook == null) {
+        if (stubWorkbook == null) {
             stubWorkbook = workbookBuildingListener.getStubHSSFWorkbook();
         }
 
@@ -179,6 +179,9 @@ public class XlsSaxAnalyser implements HSSFListener, ExcelExecutor {
     private void processLastCellOfRow(Record record) {
         // Handle end of row
         if (record instanceof LastCellOfRowDummyRecord) {
+            if (records.isEmpty()) { // the empty line
+                lastRowNumber = ((LastCellOfRowDummyRecord) record).getRow();
+            }
             endRow();
         }
     }

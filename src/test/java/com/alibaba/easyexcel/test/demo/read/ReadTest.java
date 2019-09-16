@@ -1,10 +1,11 @@
 package com.alibaba.easyexcel.test.demo.read;
 
-import java.io.File;
+import java.io.*;
 import java.util.List;
 import java.util.Map;
 
 import com.alibaba.excel.support.ErrorLevelEnum;
+import com.alibaba.excel.util.IoUtils;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.slf4j.Logger;
@@ -163,10 +164,15 @@ public class ReadTest {
      * 3. 直接读即可
      */
     @Test
-    public void exceptionRead() {
-        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo1.xlsx";
+    public void exceptionRead() throws IOException {
+        String fileName = TestFileUtil.getPath() + "demo" + File.separator + "demo4.xls";
+        InputStream is = new FileInputStream(fileName);
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        IoUtils.copy(is, bos);
+        byte[] bytes = bos.toByteArray();
+        ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
         // 这里 需要指定读用哪个class去读，然后读取第一个sheet 然后千万别忘记 finish
-        EasyExcel.read(fileName, DemoData.class, new DemoHeadDataListener()).errorLevel(ErrorLevelEnum.LEVEL_ROW).sheet().doRead();
+        EasyExcel.read(bis, Demo1Data.class, new Demo1DataListener()).errorLevel(ErrorLevelEnum.LEVEL_ROW).sheet().doRead();
     }
 
     /**
