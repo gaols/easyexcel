@@ -16,7 +16,7 @@ public class ReadRowHolder implements Holder {
     /**
      * Returns row index of a row in the sheet that contains this cell.Start form 0.
      */
-    private int rowIndex;
+    private Integer rowIndex;
     /**
      * Record convert fail cols.
      */
@@ -31,7 +31,7 @@ public class ReadRowHolder implements Holder {
      */
     private GlobalConfiguration globalConfiguration;
 
-    public ReadRowHolder(int rowIndex, GlobalConfiguration globalConfiguration) {
+    public ReadRowHolder(Integer rowIndex, GlobalConfiguration globalConfiguration) {
         this.rowIndex = rowIndex;
         this.globalConfiguration = globalConfiguration;
     }
@@ -52,11 +52,11 @@ public class ReadRowHolder implements Holder {
         this.currentRowAnalysisResult = currentRowAnalysisResult;
     }
 
-    public int getRowIndex() {
+    public Integer getRowIndex() {
         return rowIndex;
     }
 
-    public void setRowIndex(int rowIndex) {
+    public void setRowIndex(Integer rowIndex) {
         this.rowIndex = rowIndex;
     }
 
